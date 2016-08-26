@@ -1,12 +1,18 @@
 package com.love.origami.model;
 
-
-public class PageBean{
+public class PageBean<T extends String>{
     private Integer offset;
     private Integer count;
 	private Integer pageSize;
 	private Integer pageIndex;
-    public Integer getCount() {
+	private T rows;
+    public T getRows() {
+		return rows;
+	}
+	public void setRows(T rows) {
+		this.rows = rows;
+	}
+	public Integer getCount() {
 		return count;
 	}
 	public void setCount(Integer count) {
