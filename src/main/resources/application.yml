@@ -25,7 +25,7 @@ spring:
 
 mybatis:
   #此配置配合xmlUserMapper的使用
-  mapperLocations: classpath:com/love/origami/mappers/*.xml
+  mapperLocations: classpath:/mappers/*.xml
   typeAliasesPackage: com.love.origami.model
 eureka:
   instance:
@@ -34,4 +34,5 @@ eureka:
     serviceUrl:
       defaultZone: http://localhost:8761/eureka/
       hystrix.command.default:
-execution.isolation.thread.timeoutInMilliseconds: 10000
+hystrix.command.default:
+  execution.isolation.thread.timeoutInMilliseconds: 10000
