@@ -20,6 +20,7 @@ import com.netflix.hystrix.contrib.javanica.annotation.HystrixCommand;
 
 
 
+
 @RestController
 @RequestMapping("/origami")
 public class PaperinnovateController {
@@ -61,6 +62,15 @@ public class PaperinnovateController {
 			List<Paperinnovate> list = paperinnovateService.search(paperinnovate);
 			String Array =JSONArray.toJSONString(list);
 			return Array;
+		}
+		@RequestMapping(value = "/oriinns/counts", method = RequestMethod.GET, produces = "application/json;charset=UTF-8")
+		@HystrixCommand(fallbackMethod = "searchhystrixjsonQuery")
+		public String searchCount(Paperinnovate paperinnovate) {
+			if(paperinnovate.getPageIndex()!=null&&paperinnovate.getPageSize()!=null){
+				paperinnovate.offset();
+			}
+			int count = paperinnovateService.searchCount(paperinnovate);
+			return String.valueOf(count);
 		}
 		  @RequestMapping(value="/oriinns/{id}",method=RequestMethod.DELETE)
 		   @HystrixCommand(fallbackMethod = "hystrixidQuery")
