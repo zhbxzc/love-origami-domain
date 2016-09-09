@@ -1,5 +1,7 @@
 package com.love.origami.dao;
 
+import java.util.List;
+
 import com.love.origami.model.Paperinnovate;
 
 public interface PaperinnovateMapper {
@@ -58,4 +60,13 @@ public interface PaperinnovateMapper {
      * @mbggenerated Fri Sep 02 17:37:14 CST 2016
      */
     int updateByPrimaryKey(Paperinnovate record);
+    
+    List<Paperinnovate> selectByCondition(Paperinnovate record);
+    
+    int searchCount(Paperinnovate record);
+    
+    Paperinnovate selectById(Integer Id);
+    
+    
+    int delete(Integer id);
 }

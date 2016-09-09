@@ -1,5 +1,6 @@
 package com.love.origami.controller;
 
+import java.io.UnsupportedEncodingException;
 import java.util.List;
 
 import javax.annotation.Resource;
@@ -20,19 +21,14 @@ import com.netflix.hystrix.contrib.javanica.annotation.HystrixCommand;
 
 
 @RestController
-@RequestMapping("Paperinnovatedomain")
+@RequestMapping("/origami")
 public class PaperinnovateController {
 	
 	@Resource
 	private PaperinnovateService paperinnovateService;
 	
-	/**
-	 * 注册诊断字典
-	 * FIXME 
-	 * @param didicInfo诊断信息的JSON串
-	 * @return 注册结果
-	 */
-	@RequestMapping(value="/origami/oriinns", method = RequestMethod.POST)
+	
+	@RequestMapping(value="/oriinns", method = RequestMethod.POST)
 	@HystrixCommand(fallbackMethod = "hystrixjsonQuery")
 	public String register(@RequestBody String paperinnovateInfo){
 		Paperinnovate paperinnovate = JSON.parseObject(paperinnovateInfo,Paperinnovate.class);
@@ -40,10 +36,53 @@ public class PaperinnovateController {
 		return register;
 	}
 	
-	public String hystrixjsonQuery(String didicInfo)
-	{
-		return "{\"result\":\"error\"}";
-	}
 	
+	  @RequestMapping(value="/oriinns/{id}",method=RequestMethod.GET)
+	   @HystrixCommand(fallbackMethod = "hystrixidQuery")
+	   public String getById(@PathVariable("id") Integer id){
+		  Paperinnovate paperinnovate = paperinnovateService.getById(id);
+		   JSONObject json = (JSONObject) JSONObject.toJSON(paperinnovate);
+		    String result =json.toString();
+			return result;
+	   }
+	  @RequestMapping(value="/oriinns/{id}",method=RequestMethod.PUT)
+	   @HystrixCommand(fallbackMethod = "hystrixjsonQuery")
+	   public String alter(@RequestBody String paperinnovateInfo){
+		  Paperinnovate paperinnovate=JSON.parseObject(paperinnovateInfo, Paperinnovate.class);
+			String result=paperinnovateService.alter(paperinnovate);	
+		    return result;
+	   }
+		@RequestMapping(value = "/oriinns", method = RequestMethod.GET, produces = "application/json;charset=UTF-8")
+		@HystrixCommand(fallbackMethod = "searchhystrixjsonQuery")
+		public String search(Paperinnovate paperinnovate) {
+			if(paperinnovate.getPageIndex()!=null&&paperinnovate.getPageSize()!=null){
+				paperinnovate.offset();
+			}
+			List<Paperinnovate> list = paperinnovateService.search(paperinnovate);
+			String Array =JSONArray.toJSONString(list);
+			return Array;
+		}
+		  @RequestMapping(value="/oriinns/{id}",method=RequestMethod.DELETE)
+		   @HystrixCommand(fallbackMethod = "hystrixidQuery")
+		   public String delete(@PathVariable("id") Integer id) throws UnsupportedEncodingException{
+			   String result=  paperinnovateService.delete(id);		 
+				 return result;
+		   }
+	  public String hystrixQuery()
+		{
+			return "{\"result\":\"error\"}";
+		}
+		public String hystrixidQuery(Integer id)
+		{
+			return "{\"result\":\"error\"}";
+		}
+		public String hystrixjsonQuery(String customerInfo)
+		{
+			return "{\"result\":\"error\"}";
+		}
+		public String searchhystrixjsonQuery(Paperinnovate paperinnovate)
+		{
+			return "{\"result\":\"error\"}";
+		}
 	
 }

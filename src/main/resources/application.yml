@@ -30,6 +30,8 @@ mybatis:
 eureka:
   instance:
     preferIpAddress: true
+    metadata-map:
+      cluster: MAIN
   client:
     serviceUrl:
       defaultZone: http://localhost:8761/eureka/

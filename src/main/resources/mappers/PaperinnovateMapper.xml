@@ -224,4 +224,51 @@
       deleted_flag = #{deletedFlag,jdbcType=BIT}
     where id = #{id,jdbcType=INTEGER}
   </update>
+    <delete id="delete" parameterType="java.lang.Integer"  >
+	update ch_paper_innovate set deleted_flag = 1
+	where id = #{id,jdbcType=INTEGER} 
+	and deleted_flag = 0
+	
+  </delete>
+  
+  <select id="selectById" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+		select
+		    <include refid="Base_Column_List" />
+    ,
+    <include refid="Blob_Column_List" />  
+		from ch_paper_innovate
+		where id = #{id,jdbcType=INTEGER}
+		AND deleted_flag=0
+	</select>
+	   <select id="selectByCondition" parameterType="com.love.origami.model.Paperinnovate" resultMap="BaseResultMap">
+		select
+		    <include refid="Base_Column_List" />
+    ,
+    <include refid="Blob_Column_List" /> 
+		from ch_paper_innovate
+		<where>
+			1=1		
+			<if test="title != null  and title !=''and title!='null'">
+				AND name like "%"#{name,jdbcType=VARCHAR}"%"
+			</if>		
+			AND deleted_flag=0
+			order by id desc
+            <if test="offset !=null and pageSize !=null and offset >=0 and pageSize >=0">
+	 	      limit #{offset},#{pageSize}
+	        </if>
+		</where>
+	</select>
+	
+	<select id="searchCount" parameterType="com.love.origami.model.Paperinnovate" resultType="java.lang.Integer">
+	  select 
+	  count(1)
+	  from ch_paper_innovate
+	  <where>  
+	    1=1    
+			<if test="title != null  and title !=''and title!='null'">
+				AND name like "%"#{name,jdbcType=VARCHAR}"%"
+			</if>		
+			AND deleted_flag=0
+	  </where>
+	</select>
 </mapper>
