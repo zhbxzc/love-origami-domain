@@ -54,7 +54,7 @@ public class PaperinnovateController {
 		    return result;
 	   }
 		@RequestMapping(value = "/oriinns", method = RequestMethod.GET, produces = "application/json;charset=UTF-8")
-		@HystrixCommand(fallbackMethod = "searchhystrixjsonQuery")
+		/*@HystrixCommand(fallbackMethod = "searchhystrixjsonQuery")*/
 		public String search(Paperinnovate paperinnovate) {
 			if(paperinnovate.getPageIndex()!=null&&paperinnovate.getPageSize()!=null){
 				paperinnovate.offset();
