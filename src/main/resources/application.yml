@@ -16,12 +16,12 @@ spring:
     testWhileIdle: true
     testOnBorrow: false
     testOnReturn: false
-  ---rabbitmq:
-    host: 10.130.202.57
-    port: 5672 
-    username: hie_cloud
-    password: hie_cloud123456
-    VirtualHost: tk-hie
+  rabbitmq:
+    host: localhost
+    port: 5672
+    username: zhb
+    password: zhb
+    virtual-host: cloud-zhb
 
 mybatis:
   #此配置配合xmlUserMapper的使用
