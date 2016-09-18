@@ -42,8 +42,7 @@ public class PaperinnovateController {
 	   @HystrixCommand(fallbackMethod = "hystrixidQuery")
 	   public String getById(@PathVariable("id") Integer id){
 		  Paperinnovate paperinnovate = paperinnovateService.getById(id);
-		   JSONObject json = (JSONObject) JSONObject.toJSON(paperinnovate);
-		    String result =json.toString();
+		    String result =JSONObject.toJSONString(paperinnovate);
 			return result;
 	   }
 	  @RequestMapping(value="/oriinns/{id}",method=RequestMethod.PUT)
