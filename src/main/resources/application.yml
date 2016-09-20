@@ -1,5 +1,12 @@
 ---  
 spring:
+  data:
+    mongodb:
+      uri: mongodb://localhost:27017/origami
+  http:
+    multipart:
+      max-file-size: 500Mb
+      max-request-size: 500Mb
   datasource:
     name: mydb
     type: com.zaxxer.hikari.HikariDataSource
